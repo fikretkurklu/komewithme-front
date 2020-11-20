@@ -52,7 +52,11 @@ const Register = () => {
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="orange" textAlign="center">
-          <img class={classes.logo} alt="KomeWithMe logo" src="/kwmlogo.png" />
+          <img
+            className={classes.logo}
+            alt="KomeWithMe logo"
+            src="/kwmlogo.png"
+          />
         </Header>
         <Form size="large">
           <Segment stacked>

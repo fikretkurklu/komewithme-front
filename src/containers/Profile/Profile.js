@@ -1,8 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Header, Icon } from "semantic-ui-react";
 
-const Register = () => {
+import Layout from "../Layout/Layout";
+
+const Profile = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   if (!user) {
@@ -10,10 +13,13 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <p>Hello world</p>
-    </div>
+    <Layout>
+      <Header icon textAlign="center" as="h1">
+        <Icon name="user" circular />
+        {user.username}
+      </Header>
+    </Layout>
   );
 };
 
-export default Register;
+export default Profile;

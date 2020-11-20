@@ -3,3 +3,7 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
+export const ADD_KOME_SUCCESS = "ADD_KOME_SUCCESS";
+export const ADD_KOME_FAIL = "ADD_KOME_FAIL";
+export const GET_ALL_KOME_SUCCESS = "GET_ALL_KOME_SUCCESS";
+export const GET_ALL_KOME_FAIL = "GET_ALL_KOME_FAIL";

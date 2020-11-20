@@ -19,13 +19,18 @@ const login = (username, password) => {
     .then((response) => {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("expirationTime", response.data.expirationTime);
 
       return response.data;
     });
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("username");
+  localStorage.removeItem("token");
+  localStorage.removeItem("expirationTime");
+
+  return true;
 };
 
 export default { register, login, logout };

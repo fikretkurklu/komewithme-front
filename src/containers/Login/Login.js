@@ -20,6 +20,7 @@ const Login = (props) => {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
 
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,13 +37,16 @@ const Login = (props) => {
     }
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
+    setLoading(true);
     dispatch(login(username, password))
       .then(() => {
         props.history.push("/profile");
         window.location.reload();
       })
-      .catch(() => {
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
         console.log("fuck");
       });
   };
@@ -51,14 +55,26 @@ const Login = (props) => {
     return <Redirect to="/profile" />;
   }
 
+  const button = loading ? (
+    <Button loading color="orange" fluid size="large"></Button>
+  ) : (
+    <Button onClick={handleLogin} color="orange" fluid size="large">
+      Login
+    </Button>
+  );
+
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="orange" textAlign="center">
-          <img class={classes.logo} alt="KomeWithMe logo" src="/kwmlogo.png" />
+          <img
+            className={classes.logo}
+            alt="KomeWithMe logo"
+            src="/kwmlogo.png"
+          />
         </Header>
         <Form size="large">
-          <Segment stacked>
+          <Segment>
             <Form.Input
               fluid
               icon="user"
@@ -69,7 +85,6 @@ const Login = (props) => {
               value={username}
               onChange={handleChange}
             />
-
             <Form.Input
               fluid
               icon="lock"
@@ -80,10 +95,7 @@ const Login = (props) => {
               value={password}
               onChange={handleChange}
             />
-
-            <Button onClick={handleLogin} color="orange" fluid size="large">
-              Login
-            </Button>
+            {button}
           </Segment>
         </Form>
         <Message>
