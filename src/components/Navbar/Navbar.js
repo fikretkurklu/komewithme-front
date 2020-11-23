@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "../../../actions/auth";
+import { logout } from "../../actions/auth";
 
-import { Menu, Image, Button, Icon } from "semantic-ui-react";
+import { Menu, Button, Icon } from "semantic-ui-react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,49 @@ const Navbar = () => {
     dispatch(logout());
   };
 
+  const leftMenu = user ? (
+    <>
+      <Menu.Item
+        name="home"
+        active={activeLink === "home"}
+        onClick={handleLinkClick}
+      >
+        <Link to="/">
+          <Icon name="home" />
+          Home
+        </Link>
+      </Menu.Item>
+      <Menu.Item
+        name="kome"
+        active={activeLink === "kome"}
+        onClick={handleLinkClick}
+      >
+        <Link to="/kome">
+          <Icon name="add" />
+          Kome
+        </Link>
+      </Menu.Item>
+    </>
+  ) : (
+    <>
+      <Menu.Item
+        name="home"
+        active={activeLink === "home"}
+        onClick={handleLinkClick}
+      >
+        <Link to="/">
+          <Icon name="home" />
+          Home
+        </Link>
+      </Menu.Item>
+    </>
+  );
+
   const rightMenu = user ? (
     <>
       <Menu.Item>
         <p>
-          Signed in as : <Link to="/profile">{user.username}</Link>
+          Signed in as : <Link to="/kome">{user.username}</Link>
         </p>
       </Menu.Item>
       <Menu.Item name="login">
@@ -47,34 +85,7 @@ const Navbar = () => {
 
   return (
     <Menu>
-      <Menu.Item
-        name="home"
-        active={activeLink === "home"}
-        onClick={handleLinkClick}
-      >
-        <Link to="/">
-          <Icon name="home" />
-          Home
-        </Link>
-      </Menu.Item>
-      <Menu.Item
-        name="kome"
-        active={activeLink === "kome"}
-        onClick={handleLinkClick}
-      >
-        <Link to="/kome">
-          <Icon name="add" />
-          Kome
-        </Link>
-      </Menu.Item>
-      <Menu.Item
-        name="profile"
-        active={activeLink === "profile"}
-        onClick={handleLinkClick}
-      >
-        <Icon name="user" />
-        Profile
-      </Menu.Item>
+      {leftMenu}
       <Menu.Menu position="right">{rightMenu}</Menu.Menu>
     </Menu>
   );

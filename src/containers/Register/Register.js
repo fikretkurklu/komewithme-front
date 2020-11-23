@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { CLEAR } from "../../actions/types";
 
 import {
   Form,
@@ -18,9 +20,16 @@ import classes from "./Register.module.css";
 const Register = () => {
   const dispatch = useDispatch();
 
+  const message = useSelector((state) => state.message);
+
+  const [loading, setLoading] = useState(false);
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    dispatch({ type: CLEAR });
+  }, [dispatch]);
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -39,14 +48,42 @@ const Register = () => {
   };
 
   const handleRegister = async (e) => {
+    setLoading(true);
     dispatch(register(username, mail, password))
       .then(() => {
-        console.log("successful");
+        setLoading(false);
       })
       .catch(() => {
-        console.log("fuck");
+        setLoading(false);
       });
   };
+
+  const button = loading ? (
+    <Button loading color="orange" fluid size="large"></Button>
+  ) : (
+    <Button onClick={handleRegister} color="orange" fluid size="large">
+      Register
+    </Button>
+  );
+
+  const successMessage = message.success ? (
+    <Message
+      positive
+      header={message.success.name}
+      content={message.success.message}
+    />
+  ) : null;
+
+  const errorMessage = message.errors
+    ? message.errors.map((error) => (
+        <Message
+          key={error.name}
+          error
+          header={error.name}
+          content={error.message}
+        />
+      ))
+    : null;
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
@@ -58,7 +95,9 @@ const Register = () => {
             src="/kwmlogo.png"
           />
         </Header>
-        <Form size="large">
+        <Form size="large" error>
+          {successMessage}
+          {errorMessage}
           <Segment stacked>
             <Form.Input
               fluid
@@ -92,9 +131,7 @@ const Register = () => {
               onChange={handleChange}
             />
 
-            <Button onClick={handleRegister} color="orange" fluid size="large">
-              Register
-            </Button>
+            {button}
           </Segment>
         </Form>
         <Message>

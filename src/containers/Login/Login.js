@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { CLEAR } from "../../actions/types";
 
 import {
   Form,
@@ -19,10 +21,15 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const message = useSelector((state) => state.message);
 
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    dispatch({ type: CLEAR });
+  }, [dispatch]);
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -41,18 +48,16 @@ const Login = (props) => {
     setLoading(true);
     dispatch(login(username, password))
       .then(() => {
-        props.history.push("/profile");
+        props.history.push("/");
         window.location.reload();
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
-        console.log("fuck");
       });
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/" />;
   }
 
   const button = loading ? (
@@ -62,6 +67,25 @@ const Login = (props) => {
       Login
     </Button>
   );
+
+  const successMessage = message.success ? (
+    <Message
+      positive
+      header={message.success.name}
+      content={message.success.message}
+    />
+  ) : null;
+
+  const errorMessage = message.errors
+    ? message.errors.map((error) => (
+        <Message
+          key={error.name}
+          error
+          header={error.name}
+          content={error.message}
+        />
+      ))
+    : null;
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
@@ -73,7 +97,9 @@ const Login = (props) => {
             src="/kwmlogo.png"
           />
         </Header>
-        <Form size="large">
+        <Form size="large" error>
+          {successMessage}
+          {errorMessage}
           <Segment>
             <Form.Input
               fluid

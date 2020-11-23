@@ -12,20 +12,24 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { CLEAR } from "../../actions/types";
 
-import { add_kome } from "../../actions/kome";
+import { update_kome } from "../../actions/kome";
 
-const AddKome = () => {
+const UpdateKome = (props) => {
   const dispatch = useDispatch();
 
   const message = useSelector((state) => state.message);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [id, setId] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch({ type: CLEAR });
-  }, [dispatch]);
+    setName(props.kome.name);
+    setDescription(props.kome.description);
+    setId(props.kome.id);
+  }, [dispatch, props]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -35,10 +39,10 @@ const AddKome = () => {
     setDescription(e.target.value);
   };
 
-  const handleAddKome = async (e) => {
+  const handleUpdateKome = async (e) => {
     setLoading(true);
 
-    dispatch(add_kome(name, description))
+    dispatch(update_kome(id, name, description))
       .then(() => {
         setLoading(false);
       })
@@ -50,8 +54,8 @@ const AddKome = () => {
   const button = loading ? (
     <Button loading color="orange" fluid size="large"></Button>
   ) : (
-    <Button onClick={handleAddKome} color="orange" fluid size="large">
-      Add
+    <Button onClick={handleUpdateKome} color="orange" fluid size="large">
+      Update
     </Button>
   );
 
@@ -77,7 +81,7 @@ const AddKome = () => {
   return (
     <div>
       <Header icon textAlign="center" as="h3">
-        Add Kome
+        Update Kome
       </Header>
       <Grid textAlign="center">
         <Grid.Column style={{ maxWidth: 450 }}>
@@ -112,4 +116,4 @@ const AddKome = () => {
   );
 };
 
-export default AddKome;
+export default UpdateKome;
