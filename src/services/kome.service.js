@@ -39,10 +39,22 @@ const delete_kome = (id) => {
   return axios.post(API_URL + "delete", { id }, { headers: authHeader() });
 };
 
+const participate_kome = (komeId) => {
+  return axios.post(
+    API_URL + "participate",
+    {
+      id: 0,
+      komeId,
+    },
+    { headers: authHeader() }
+  );
+};
+
 export default {
   add_kome,
   get_all_kome,
   get_my_kome,
   delete_kome,
   update_kome,
+  participate_kome,
 };

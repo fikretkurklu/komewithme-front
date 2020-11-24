@@ -9,6 +9,8 @@ import {
   GET_MY_KOME_SUCCESS,
   DELETE_KOME_FAIL,
   DELETE_KOME_SUCCESS,
+  PARTICIPATE_KOME_FAIL,
+  PARTICIPATE_KOME_SUCCESS,
   ERROR,
   SUCCESS,
   CLEAR,
@@ -133,4 +135,19 @@ export const delete_kome = (id) => (dispatch) => {
       return Promise.reject();
     }
   );
+};
+
+export const participate_kome = (komeId) => (dispatch) => {
+  return KomeService.participate_kome(komeId)
+    .then((response) => {
+      dispatch({
+        type: PARTICIPATE_KOME_SUCCESS,
+        payload: { komes: response.data },
+      });
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      dispatch({ type: PARTICIPATE_KOME_FAIL });
+      return Promise.reject();
+    });
 };

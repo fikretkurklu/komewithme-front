@@ -9,6 +9,8 @@ import {
   GET_MY_KOME_SUCCESS,
   DELETE_KOME_FAIL,
   DELETE_KOME_SUCCESS,
+  PARTICIPATE_KOME_FAIL,
+  PARTICIPATE_KOME_SUCCESS,
 } from "../actions/types";
 
 const initialState = { komes: {}, myKomes: {} };
@@ -64,6 +66,15 @@ const komeReducer = (state = initialState, action) => {
       return {
         ...state,
         myKomes: payload.myKomes,
+      };
+    case PARTICIPATE_KOME_SUCCESS:
+      return {
+        ...state,
+        komes: payload.komes,
+      };
+    case PARTICIPATE_KOME_FAIL:
+      return {
+        ...state,
       };
     default:
       return state;
