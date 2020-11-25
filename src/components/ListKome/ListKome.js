@@ -21,8 +21,6 @@ const ListKome = (props) => {
 
   const handleUpdate = (id, name, description) => {
     props.updateKome({ id, name, description });
-
-    console.log(myKomes);
   };
 
   const listKome =

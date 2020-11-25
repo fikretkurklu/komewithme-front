@@ -1,6 +1,7 @@
 import axios from "axios";
+import config from "../config";
 
-const API_URL = "http://localhost:8080/api/auth/user/";
+const API_URL = config.apiGateway.URL + "api/auth/user/";
 
 const register = (username, email, password) => {
   return axios.post(API_URL + "register", {
