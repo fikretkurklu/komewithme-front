@@ -13,7 +13,7 @@ import {
   PARTICIPATE_KOME_SUCCESS,
 } from "../actions/types";
 
-const initialState = { komes: {}, myKomes: {} };
+const initialState = { komes: [], myKomes: [] };
 
 const komeReducer = (state = initialState, action) => {
   const { type, payload } = action;
