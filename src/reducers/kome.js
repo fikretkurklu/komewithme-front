@@ -40,7 +40,6 @@ const komeReducer = (state = initialState, action) => {
     case GET_ALL_KOME_FAIL:
       return {
         ...state,
-        komes: null,
       };
     case GET_ALL_KOME_SUCCESS:
       return {
@@ -51,7 +50,6 @@ const komeReducer = (state = initialState, action) => {
     case GET_MY_KOME_FAIL:
       return {
         ...state,
-        myKomes: null,
       };
     case GET_MY_KOME_SUCCESS:
       return {
