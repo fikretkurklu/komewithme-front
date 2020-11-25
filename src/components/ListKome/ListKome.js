@@ -23,36 +23,35 @@ const ListKome = (props) => {
     props.updateKome({ id, name, description });
   };
 
-  const listKome =
-    myKomes.length > 0 ? (
-      myKomes.map((kome) => {
-        return (
-          <List.Item key={kome.id}>
-            <List.Content>
-              <List.Header>{kome.name}</List.Header>
-              <List.Description>{kome.description}</List.Description>
-            </List.Content>
-            <List.Content floated="right">
-              <Form>
-                <Button
-                  color="orange"
-                  onClick={() =>
-                    handleUpdate(kome.id, kome.name, kome.description)
-                  }
-                >
-                  Update
-                </Button>
-                <Button color="red" onClick={() => handleDelete(kome.id)}>
-                  Delete
-                </Button>
-              </Form>
-            </List.Content>
-          </List.Item>
-        );
-      })
-    ) : (
-      <></>
-    );
+  const listKome = myKomes ? (
+    myKomes.map((kome) => {
+      return (
+        <List.Item key={kome.id}>
+          <List.Content>
+            <List.Header>{kome.name}</List.Header>
+            <List.Description>{kome.description}</List.Description>
+          </List.Content>
+          <List.Content floated="right">
+            <Form>
+              <Button
+                color="orange"
+                onClick={() =>
+                  handleUpdate(kome.id, kome.name, kome.description)
+                }
+              >
+                Update
+              </Button>
+              <Button color="red" onClick={() => handleDelete(kome.id)}>
+                Delete
+              </Button>
+            </Form>
+          </List.Content>
+        </List.Item>
+      );
+    })
+  ) : (
+    <></>
+  );
 
   return (
     <>

@@ -18,33 +18,32 @@ const AllKome = (props) => {
     props.updateCurrentKome(kome);
   };
 
-  const listKome =
-    komes.length > 0 ? (
-      komes.map((kome) => {
-        return (
-          <List.Item key={kome.id}>
-            <List.Content>
-              <List.Header>
-                {kome.name} by {kome.user.username}
-              </List.Header>
-              <List.Description>{kome.description}</List.Description>
-              <List.Content floated="right">
-                <Button
-                  color="blue"
-                  onClick={() => {
-                    handleView(kome);
-                  }}
-                >
-                  View
-                </Button>
-              </List.Content>
+  const listKome = komes ? (
+    komes.map((kome) => {
+      return (
+        <List.Item key={kome.id}>
+          <List.Content>
+            <List.Header>
+              {kome.name} by {kome.user.username}
+            </List.Header>
+            <List.Description>{kome.description}</List.Description>
+            <List.Content floated="right">
+              <Button
+                color="blue"
+                onClick={() => {
+                  handleView(kome);
+                }}
+              >
+                View
+              </Button>
             </List.Content>
-          </List.Item>
-        );
-      })
-    ) : (
-      <></>
-    );
+          </List.Content>
+        </List.Item>
+      );
+    })
+  ) : (
+    <></>
+  );
 
   return (
     <div>
